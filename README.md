@@ -1,3 +1,3 @@
-# Roadtrip Mixtape
+# Roadtrip
 
 An Insight Data Science Fellowship project
