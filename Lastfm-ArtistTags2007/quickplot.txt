@@ -1,0 +1,12 @@
+Artist 1, Artist2, Distance
+Yo-Yo Ma, Andrew Bird, 25.815789473684212
+Yo-Yo Ma, Cannibal Corpse, 30.75 
+Yo-Yo Ma, Zoe Keating, 14.0 'beauteous'
+
+
+The Decemberists, Colin Meloy, 2.0
+The Decemberists, Postal Service, 14.053333333333333
+The Decemberists, Backstreet Boys, 25.75
+The Decemberists, Justin Bieber, inf
+
+['Cannibal Corpse', 'seen live', 'Yo-Yo Ma']

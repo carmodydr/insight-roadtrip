@@ -1,0 +1,28 @@
+Yo-Yo Ma,Radiohead,32.3665158371
+Yo-Yo Ma,Pink Floyd,22.6722222222
+Yo-Yo Ma,The Beatles,24.9495192308
+Yo-Yo Ma,Red Hot Chili Peppers,33.6329545455
+Yo-Yo Ma,System of a Down,35.3083333333
+Yo-Yo Ma,Metallica,27.5
+Yo-Yo Ma,Coldplay,40.2142857143
+Yo-Yo Ma,Nirvana,25.75
+Yo-Yo Ma,Death Cab for Cutie,22.9387755102
+Yo-Yo Ma,Muse,30.7058823529
+Yo-Yo Ma,Green Day,31.0203208556
+Yo-Yo Ma,Franz Ferdinand,43.4166666667
+Yo-Yo Ma,Nine Inch Nails,38.6795698925
+Yo-Yo Ma,Led Zeppelin,33.5
+Yo-Yo Ma,Tool,31.8960298743
+
+
+2
+['The Decemberists', 'Death+Cab+for+Cutie', 'Arcade Fire']
+
+6
+['The Decemberists',
+ 'Spoon',
+ 'Beck',
+ 'The White Stripes',
+ 'Rage+Against+the+Machine',
+ 'System of a Down',
+ 'Metallica']

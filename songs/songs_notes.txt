@@ -1,0 +1,19 @@
+Echo Nest features and metadata: (https://developer.spotify.com/web-api/get-audio-features/)
+energy
+danceability
+confidence
+tempo
+loudness
+acousticness
+intstrumentalness
+liveness
+speechiness
+valence - happiness/sadness
+terms (tags)
+
+
+Microsoft Emotion API: https://www.microsoft.com/cognitive-services/en-us/emotion-api - 30000 transactions/month
+anger, contempt, disgust, fear, happiness, neutral, sadness, and surprise
+
+
+Computer Vision API: https://www.microsoft.com/cognitive-services/en-us/computer-vision-api - 5000 transactions/month
