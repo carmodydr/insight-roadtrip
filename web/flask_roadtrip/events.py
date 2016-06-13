@@ -16,7 +16,7 @@ startDate = '2016-07-06'
 endDate = '2016-07-14'
 
 def returnEvents(lat, lon, radius, startDate, endDate):
-	url = 'http://api.bandsintown.com/events/search?location='+str(lat)+','+str(lon)+'&date='+startDate+','+endDate+'&format=json&app_id=' + appID
+	url = 'http://api.bandsintown.com/events/search?location='+str(lat)+','+str(lon)+'&radius='+radius+'&date='+startDate+','+endDate+'&format=json&app_id=' + appID
 	
 	response = requests.request( 'get', url)
 	parsedResponse = response.json()

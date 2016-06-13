@@ -32,14 +32,17 @@ def index():
 		user = user)
 
 @app.route('/input')
-def cesareans_input():
+def roadtrip_input():
 	return render_template("input.html")
 
 @app.route("/output")
-def cesareans_output():
+def roadtrip_output():
 	#pull 'birth_month' from input field and store it
 	start = request.args.get('start_location')
 	startlat, startlon = latlon(start)
+
+	end = request.args.get('end_location')
+	endlat, endlon = latlon(end)
 
 	seedArtist = request.args.get('seed_artist')
 	#just select the Cesareans from the birth database for the month that the user inputs
@@ -48,12 +51,17 @@ def cesareans_output():
 	#query_results = pd.read_sql_query(query,con)
 	#print query_results
 	events = []
-	eventResponse = returnEvents( startlat, startlon, 100, '2016-07-06', '2016-07-14')	
+	topEvents = []
+	eventResponse = returnEvents( startlat, startlon, '100', '2016-07-06', '2016-07-14')	
 	for i in eventResponse:
 		for j in i['artists']:
 			try:
 				events.append(dict(band=j['name'], venue=i['venue']['name'], rank=artistPath(g, seedArtist, j['name']) ) )
 			except:
 				events.append(dict(band=j['name'], venue=i['venue']['name'], rank='1000' ) )
-	the_result = artistPath( g, seedArtist, 'Metallica')
-	return render_template("output.html", events = events, the_result=the_result)
+	sortEvents = sorted( events, key=lambda k: k['rank'] )
+	topEvents.append( sortEvents[0] )
+
+	
+
+	return render_template("output.html", events = topEvents)
