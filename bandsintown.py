@@ -3,6 +3,8 @@ import requests
 import operator
 import numpy as np
 
+
+
 url = 'http://api.bandsintown.com/events/search'
 appID = 'insightprojectDC'
 url = 'http://api.bandsintown.com/events/search?location=35.379494,-118.828125&format=json&app_id=' + appID
