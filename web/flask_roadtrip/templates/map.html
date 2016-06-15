@@ -31,6 +31,12 @@
     <![endif]-->
   <script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.js'></script>
   <link href='https://api.tiles.mapbox.com/mapbox.js/v2.2.4/mapbox.css' rel='stylesheet' />
+  <script src='https://api.mapbox.com/mapbox.js/plugins/mapbox-directions.js/v0.4.0/mapbox.directions.js'></script>
+  <link rel='stylesheet' href='https://api.mapbox.com/mapbox.js/plugins/mapbox-directions.js/v0.4.0/mapbox.directions.css' type='text/css' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.12.0/mapbox-gl.css' rel='stylesheet' />
+  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.js'></script>
+  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v1.0.0/mapbox-gl-directions.css' rel='stylesheet' />
   <style>
     body { margin:0; padding:0; }
     .map { position:absolute; top:0; bottom:0; width:100%; }
@@ -62,19 +68,61 @@
 
   <br><br>
 
-	<div id='map-leaflet' class='map'> </div>
+	<div id='map' class='map'> </div>
+	<div id='directions' class='directions'></div>
 	<script>
+
+/*
 	L.mapbox.accessToken = 'pk.eyJ1IjoiZGNhcm1vZHkiLCJhIjoiSUlWeU1NTSJ9.V7TY3S0gmUS6uazTLfcUgw';
 	var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.light')
 	  .setView([37.8, -96], 4)
 
+	var directions = L.mapbox.directions({profile: 'mapbox/driving' });
+
+	// Set the origin and destination for the direction and call the routing service
+	directions.setOrigin(L.latLng(35, -70)); 
+	directions.setDestination(L.latLng(36, -65));   
+	directions.query(); 
+
 	// iterate through the list of locations and add them to the map
-	var places = [[38.913184,-77.031952], [37.775408,-122.413682] , [42, -80]];
 	for (i=0; i < {{ placesList }}.length; i++) { 
 		L.marker({{ placesList }}[i]).addTo(mapLeaflet);
 	}
 
+	var directionsLayer = L.mapbox.directions.layer(directions).addTo(mapLeaflet); 
+	var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions).addTo(mapLeaflet);
+*/
+
+	mapboxgl.accessToken = 'pk.eyJ1IjoiZGNhcm1vZHkiLCJhIjoiSUlWeU1NTSJ9.V7TY3S0gmUS6uazTLfcUgw';
+
+	var map = new mapboxgl.Map({
+	  container: 'map',
+	  style: 'mapbox://styles/mapbox/streets-v8'
+	});
+
+
+	var directions = new mapboxgl.Directions({
+	  unit: 'metric', // Use the metric system to display distances.
+	  profile: 'driving', // Set the initial profile to walking.
+	  container: 'directions', // Specify an element thats not the map container.
+	  proximity: [-79.45, 43.65] // Give search results closer to these coordinates higher priority.
+	});
+
+	map.addControl(directions);
+
+	map.on('load', function() {
+	  directions.setOrigin("San Diego, CA"); // On load, set the origin to "Toronto, Ontario".
+	  directions.setDestination('Montreal, Quebec'); // On load, set the destination to "Montreal, Quebec".
+	  //directions.addWaypoint(0, "waypoint": [-70,35]);
+	});
+
+	directions.on('route', function(e) {
+	  console.log(e.route); // Logs the current route shown in the interface.
+	});
+
+
 	mapLeaflet.scrollWheelZoom.disable();
+
 	</script>
 
 

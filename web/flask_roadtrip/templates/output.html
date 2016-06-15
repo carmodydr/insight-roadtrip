@@ -63,9 +63,9 @@
 	</div>
 
 	<table class="table table-hover">
-	<tr><th>Band</th><th>Venue</th><th>Date</th></tr>
+	<tr><th>Band</th><th>Venue</th><th>Location</th><th>Date</th></tr>
 	{% for event in events %}
-      	<tr><td>{{ event['band'] }}</td><td>{{ event['venue']}}</td><td> {{ event['rank'] }}</td></tr>
+      	<tr><td>{{ event['band'] }}</td><td>{{ event['venue']}}</td><td>{{ event['venLat'] }},{{ event['venLon'] }}</td><td> {{ event['rank'] }}</td></tr>
      	 {% endfor %}
 	</table>
     </div>
