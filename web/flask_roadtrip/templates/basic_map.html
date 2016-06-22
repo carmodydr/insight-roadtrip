@@ -9,7 +9,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Concertrip</title>
+    <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -59,7 +59,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="/">Home</a></li>
+            <li class="active"><a href="#">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
@@ -70,97 +70,26 @@
   <br><br>
 
 	<div id='map-leaflet' class='map'> </div>
-	<div id='directions' class='directions'></div>
 	
-	<script>
-	// define arrays to be used later on
-	var bandArr = [];
-	var venArr = [];
-	var dateArr = [];
-	var evUrlArr = [];
-	var colorArr = [];
-	</script>
-
-	{% for event in eventList %}
-	<script>
-	// define arrays with global scope in mind
-	var bandArr = bandArr || [];
-	var venArr = venArr || [];
-	var dateArr = dateArr || [];
-	var evUrlArr = evUrlArr || [];
-	var colorArr = colorArr || [];
-	bandArr.push('{{event["band"]}}'.replace(/&#039;/g, "'") );
-	venArr.push('{{event["venue"]}}'.replace(/&#039;/g, "'") );
-	dateArr.push('{{event["date"]}}'.replace(/&#039;/g, "'") );
-	evUrlArr.push('{{event["eventUrl"]}}'.replace(/&#039;/g, "'") );
-	colorArr.push('{{event["chosen"]}}');
-	</script>
-	{% endfor %}
 
 	<script>
 
-	L.mapbox.accessToken = 'pk.eyJ1IjoiZGNhcm1vZHkiLCJhIjoiSUlWeU1NTSJ9.V7TY3S0gmUS6uazTLfcUgw';
+	L.mapbox.accessToken = '<access token>';
 	var mapLeaflet = L.mapbox.map('map-leaflet', 'mapbox.light')
 	  .setView([37.8, -96], 4)
-
-	var directions = L.mapbox.directions({profile: 'mapbox/driving' });
-
-	// Set the origin and destination for the direction and call the routing service
-//	directions.setOrigin(L.latLng(35, -70)); 
-//	directions.setDestination(L.latLng(36, -65));   
-//	directions.query(); 
 
 	// iterate through the list of locations and add them to the map
 	for (i=0; i < {{ placesList }}.length; i++) { 
 		var locLat =  {{placesList}}[i][0];
 		var locLon =  {{placesList}}[i][1];
-		var tooltip = '<h1>'.concat('Band: ',bandArr[i],'<\/h1><h2>Venue: ',
-			venArr[i],'<\/h2><h3>',dateArr[i],'</h3>');
-		if (bandArr[i] == 'Start') {
-			tooltip = 'Start'; }
-		if (bandArr[i] == 'End') {
-			tooltip = 'End'; }
 		var color = "#3ca0d3"; // blue, color for unchosen event
-		if (colorArr[i] == 1) { color = '#ff3333'; }
-		L.marker( [locLat,locLon], {title: String(bandArr[i]),
+		L.marker( [locLat,locLon], {title: "title",
 				icon: L.mapbox.marker.icon({
     				    'marker-size': 'large',
     				    'marker-symbol': 'music',
     				    'marker-color': color })
-			 } ).addTo(mapLeaflet).bindPopup( tooltip );
+			 } ).addTo(mapLeaflet).bindPopup( "text" );
 	}
-
-//	var directionsLayer = L.mapbox.directions.layer(directions).addTo(mapLeaflet); 
-//	var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions).addTo(mapLeaflet);
-
-/*
-	mapboxgl.accessToken = 'pk.eyJ1IjoiZGNhcm1vZHkiLCJhIjoiSUlWeU1NTSJ9.V7TY3S0gmUS6uazTLfcUgw';
-
-	var map = new mapboxgl.Map({
-	  container: 'map-leaflet',
-	  style: 'mapbox://styles/mapbox/streets-v8'
-	});
-
-
-	var directions = new mapboxgl.Directions({
-	  unit: 'metric', // Use the metric system to display distances.
-	  profile: 'driving', // Set the initial profile to walking.
-	  container: 'directions', // Specify an element thats not the map container.
-	  proximity: [-79.45, 43.65] // Give search results closer to these coordinates higher priority.
-	});
-
-	map.addControl(directions);
-
-	map.on('load', function() {
-	  directions.setOrigin("Toronto, Ontario"); // On load, set the origin to "Toronto, Ontario".
-`	  directions.setDestination('Montreal, Quebec'); // On load, set the destination to "Montreal, Quebec".
-//	  directions.addWaypoint(0, {waypoint: [-70,35]});
-	});
-
-	directions.on('route', function(e) {
-	  console.log(e.route); // Logs the current route shown in the interface.
-	});
-*/
 
 	mapLeaflet.scrollWheelZoom.disable();
 
@@ -178,14 +107,10 @@
        	 <table class="table table-hover">
        	 <tr><th>Band</th><th>Venue</th><th>Date</th><th>Rank</th></tr>
        	 {% for event in eventList %}
-	 {% if event['band'] == 'Start' %}
-       	 <tr style="font-weight: bold; color: red"><td>{{ event['band'] }}</td><td>{{ startName }}</td><td> {{ event['date'] }} </td><td>-</td></tr>
-	 {% elif event['band'] == 'End' %}
-       	 <tr style="font-weight: bold; color: red"><td>{{ event['band'] }}</td><td>{{ endName }}</td><td> {{ event['date'] }} </td><td>-</td></tr>
-	 {% elif event['chosen'] == 1 %}
-       	 <tr style="font-weight: bold; color: red"><td><a href="{{ event['eventUrl'] }}">{{ event['band'] }}</a></td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
+	 {% if event['chosen'] == 1 %}
+       	 <tr style="font-weight: bold; color: red"><td>{{ event['band'] }}</td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
 	{% else %}
-       	 <tr><td><a href="{{ event['eventUrl'] }}">{{ event['band'] }}</a></td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
+       	 <tr><td>{{ event['band'] }}</td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
        	{% endif %}  
 	{% endfor %}
        	 </table>
