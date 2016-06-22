@@ -14,9 +14,6 @@
     <!-- Bootstrap core CSS -->
     <link href="../static/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
 
@@ -49,7 +46,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Home</a></li>
+            <li class="active"><a href="/">Home</a></li>
             <li><a href="/about">About</a></li>
             <li><a href="/contact">Contact</a></li>
           </ul>
@@ -59,62 +56,15 @@
 
   <br><br>
 
-	<!-- script to load and hide-->
-	<script type="text/javascript">// <![CDATA[
-        function loading(){
-            $("#loading").show();
-            $("#content").hide();       
-        }
-	// ]]></script>
-
-
-    <div class="loading"></div>
-    <div class="content">
     <div class="container">
 
 	<div class="starter-template">
-		<h2>Input Page</h2>
-		<p>Enter some information about your itinerary and music preference.</p>
+		<h2>Error!</h2>
+		<p>There was a problem with the date that you entered.
 	</div>
 
-	<center>
-	<div class="container">
-		<form action="/map" method="GET">
-			<div class="col-md-6">
-			<div class="form-group">
-				<label for="start_location">Start location:</label><br>
-				<input type="text" id="start_location" class="form-control" name='start_location' placeholder="e.g. ">
-			</div>
-			<div class="form-group">
-				<label for="start_date">Start date:</label><br>
-				<input type="date" id="start_date" class="form-control" name='start_date' placeholder="YYYY-MM-DD">
-			</div>
-			</div>
-			<div class="col-md-6">
-			<div class="form-group">
-				<label for="end_location">End location:</label><br>
-				<input type="text" id="end_location" class="form-control" name='end_location' placeholder="e.g. ">
-			</div>
-			<div class="form-group">
-				<label for="end_date">End date:</label><br>
-				<input type="date" id="end_date" class="form-control" name='end_date' placeholder="YYYY-MM-DD">
-			</div>
-			</div>
-			<div class="form-group">
-				<label for="seed_artist">Seed artist:</label>
-				<input type="text" id="seed_artist" name='seed_artist' class="form-control" placeholder="e.g. ">
-			</div>
-
-			<div>
-				<button type="submit" class="btn btn-default btn-lg" style="background-color: #3ca0d3; color: white" onclick="loading();">Find a route!</button>
-			</div>
-		</form>
-	</div>
-	</center>
-  
 
     </div><!-- /.container -->
-    </div><!-- content -->
 
   <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
   <script src="static/js/bootstrap.min.js"></script>

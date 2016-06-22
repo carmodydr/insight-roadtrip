@@ -1,5 +1,6 @@
 from geopy.geocoders import Nominatim
 from numpy import sin, cos, arctan2, sqrt, pi
+import requests
 
 # Takes in a location and produces lat and lon
 def latlon(place):
@@ -22,6 +23,14 @@ def lldist( lat1, lon1, lat2, lon2):
 	d = R * c
 
 	return d
+
+# use OpenStreetMap Routing API
+def osrmDist( lat1, lon1, lat2, lon2):
+	url = 'http://router.project-osrm.org/table?loc='+str(lat1)+','+str(lon1)+'&loc='+str(lat2)+','+str(lon2)
+        response = requests.request( 'get', url)
+        parsedResponse = response.json()
+        return parsedResponse['distance_table'][1][0]
+
 
 def deg2rad(deg):
     return deg * (pi/180)

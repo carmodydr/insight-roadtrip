@@ -5,3 +5,11 @@ body {
   padding: 40px 15px;
   text-align: center;
 }
+
+div#loading {
+    width: 35px;
+    height: 35px;
+    display: none;
+    background: url(/static/images/ajax-loader.gif) no-repeat;
+    cursor: wait;
+}
