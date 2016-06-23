@@ -85,9 +85,11 @@ def topEvent(lat, lon, searchDateStart, searchDateEnd, radius, seedArtist, g):
 		print "No events for this location"
 		return []
 
-def routeOptimizer(topEvents):
+def routeOptimizer(topEvents, relWeight):
 	# Gets a list of the top events from multiple areas, creates a weighted graph, finds best route
 
+	l = len(topEvents)
+	fullDist = 1.0*lldist( topEvents[0]['venLat'], topEvents[0]['venLon'], topEvents[l-1]['venLat'], topEvents[l-1]['venLon']) # lat/lon distance from start to end	
 	
 	# MUST MAKE SURE START AND END ARE IN THE LIST
 	DG = nx.DiGraph() # create a new directed graph
@@ -102,20 +104,28 @@ def routeOptimizer(topEvents):
         		deltaDay = day2 - day1
 			dist = 1.0*lldist( i['venLat'], i['venLon'], j['venLat'], j['venLon'] ) 
 			#dist = 1.0*osrmDist( i['venLat'], i['venLon'], j['venLat'], j['venLon'] ) 
-			print "Distance = ", dist
 			tooFar = 500 # in miles
 			#tooFar = 300000 # in 10ths of seconds, about 8 hours
         		if (deltaDay.days > 0):
 				if (dist/deltaDay.days < tooFar): # only link two events if the second is forward in time, and they're not too far
-            				wght = dist * np.exp((float(j['rank'])/rank_norm)-1)
+            				#wght = dist*np.exp((float(j['rank'])/rank_norm)-1)
+            				wght = ((1.0-relWeight/100.0) *(dist/fullDist) - (relWeight/100.0)*(1-float(j['rank'])/rank_norm))
+		#			wght = np.exp(wght) # map wght to between 0 and 1
+	#				if (wght <= 0): wght = (j['rank']/rank_norm)*(dist/fullDist)
 					print i['ind'],j['ind'],wght
             				DG.add_weighted_edges_from([(i['ind'],j['ind'],wght)])
 
-	path = nx.shortest_path(DG,'Start','End','weight') # the nodes are labeled by ind, so that's all this will return at the moment
-	print path
-	return path
+	pred, dist = nx.bellman_ford(DG,'Start','weight')
+	node = 'End'
+	nodeList = []
+	while (node != 'Start'):
+		nodeList.append(node)
+		node = pred[node]
+	#path = nx.shortest_path(DG,'Start','End','weight') # the nodes are labeled by ind, so that's all this will return at the moment
+	#print path
+	return nodeList
 
-def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDate, seedArtist, g):
+def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDate, seedArtist, g, relWeight):
 	'''
 	Get the intitial information and then, using other functions:
 	1. Get a list of places to check.
@@ -135,10 +145,10 @@ def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDa
 	
 	# find the top event for each one of those places
 	for i in places:
-		d1 = sDate + timedelta(days=i[2])
-		d2 = sDate + timedelta(days=(i[2]+i[3]))
-		d1 = to_datetime(startDate)
-		d2 = to_datetime(endDate)
+		d1 = sDate + timedelta(days=i[2]) - timedelta(days=i[3])
+		d2 = sDate + timedelta(days=i[2]) + timedelta(days=i[3])
+		#d1 = to_datetime(startDate)
+		#d2 = to_datetime(endDate)
 		l = topEvent( i[0], i[1], d1.strftime('%Y-%m-%d'), d2.strftime('%Y-%m-%d'), radius, seedArtist, g)
 		# check to see if an event was actually returned
 		# and that it's better than average
@@ -151,7 +161,7 @@ def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDa
 
 	# call a function that plots the shortest route, optimizing for distance and rank
 	print "Checking optimizer:"
-	chosenEvents = routeOptimizer(fullList)
+	chosenEvents = routeOptimizer(fullList, relWeight)
 	
 	for i in chosenEvents:
 		for j in fullList:
