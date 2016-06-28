@@ -185,7 +185,7 @@
 	 {% elif event['chosen'] == 1 %}
        	 <tr style="font-weight: bold; color: red"><td><a href="{{ event['eventUrl'] }}">{{ event['band'] }}</a></td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
 	{% else %}
-       	 <tr><td><a href="{{ event['eventUrl'] }}">{{ event['band'] }}</a></td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
+       	 <tr><td><a href="{{ event['eventUrl'] }}" target="_blank">{{ event['band'] }}</a></td><td>{{ event['venue']}}</td><td> {{ event['date'] }} </td><td>{{ event['rank'] }}</td></tr>
        	{% endif %}  
 	{% endfor %}
        	 </table>

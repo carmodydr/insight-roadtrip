@@ -58,9 +58,9 @@ def genLatLonPoints(startLat, startLon, endLat, endLon, startDate, endDate, radi
 
 	for i in range(numSegments):
 		# append places with lat, lon, day of trip to search, range of days to search
-		places.append( (startLat + dlatVec*(i+1), startLon + dlonVec*(i+1), (i+1)+i*dayRange, dayRange) )
-		places.append( (startLat + dlatVec*(i+1)+dy, startLon + dlonVec*(i+1) - dx, (i+1)+i*dayRange, dayRange) )
-		places.append( (startLat + dlatVec*(i+1)-dy, startLon + dlonVec*(i+1) + dx, (i+1)+i*dayRange, dayRange) )
+		places.append( (startLat + dlatVec*(i+1), startLon + dlonVec*(i+1), (i+1)*dayRange, dayRange) )
+		places.append( (startLat + dlatVec*(i+1)+dy, startLon + dlonVec*(i+1) - dx, (i+1)*dayRange, dayRange) )
+		places.append( (startLat + dlatVec*(i+1)-dy, startLon + dlonVec*(i+1) + dx, (i+1)*dayRange, dayRange) )
 	print places	
 	return places
 
@@ -145,8 +145,8 @@ def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDa
 	
 	# find the top event for each one of those places
 	for i in places:
-		d1 = sDate + timedelta(days=i[2]) - timedelta(days=i[3])
-		d2 = sDate + timedelta(days=i[2]) + timedelta(days=i[3])
+		d1 = sDate + timedelta(days=i[2]) - timedelta(days=i[3]/2)
+		d2 = sDate + timedelta(days=i[2]) + timedelta(days=i[3]/2)
 		#d1 = to_datetime(startDate)
 		#d2 = to_datetime(endDate)
 		l = topEvent( i[0], i[1], d1.strftime('%Y-%m-%d'), d2.strftime('%Y-%m-%d'), radius, seedArtist, g)
@@ -156,8 +156,14 @@ def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDa
 			if l['rank'] < rank_norm:
 				fullList.append( l )
 
+	#uniquify
+	ls = [dict(y) for y in set(tuple(x.items()) for x in fullList)]
+	newlist = sorted(ls, key=lambda k: to_datetime(k['date']))
+
+	fullList = newlist
 	# add point for end
 	fullList.append(dict(ind='End', band='End', venue='End', venLat=latEnd, venLon=lonEnd, rank=rank_norm, date=endDate, eventUrl='', chosen=1 ) )
+	
 
 	# call a function that plots the shortest route, optimizing for distance and rank
 	print "Checking optimizer:"
@@ -167,5 +173,5 @@ def returnTopEvents(latStart, lonStart, latEnd, lonEnd, radius, startDate, endDa
 		for j in fullList:
 			if (j['ind'] == i):
 				j['chosen'] = 1
-
-	return fullList
+	
+	return newlist
