@@ -29,6 +29,14 @@ g = nx.from_pandas_dataframe(simArtists,'Artist','RelArtist')
 #		title = 'Home',
 #		user = user)
 
+@app.errorhandler(500)
+def page_not_found(e):
+    return render_template('error.html'), 500
+
+@app.route('/error')
+def page_n_found():
+    return render_template('error.html')
+
 @app.route('/')
 @app.route('/index')
 def roadtrip_input():
