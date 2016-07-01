@@ -1,1 +1,12 @@
 web/flask_roadtrip/secrets.py
+songs/buildArtistDB/earlyrelArtist_parse.csv
+songs/buildArtistDB/fullGraph.graphml
+songs/buildArtistDB/fullGraph_connected.graphml
+songs/buildArtistDB/reducedGraph.graphml
+songs/buildArtistDB/reducedGraph2.graphml
+songs/buildArtistDB/reducedGraph3.graphml
+songs/buildArtistDB/reducedGraph4.graphml
+songs/buildArtistDB/subsetArtist.csv
+songs/buildArtistDB/tinyGraph.graphml
+web/flask_roadtrip/secrets.pyc
+songs/buildArtistDB/relArtist_parse.csv

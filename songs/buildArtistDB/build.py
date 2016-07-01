@@ -1,13 +1,11 @@
 import MySQLdb as mdb
 import networkx as nx
-import spotipy
 import json
 import pandas as pd
 from pprint import pprint
 from sqlalchemy import create_engine
 from sqlalchemy_utils import database_exists, create_database
 
-sp = spotipy.Spotify()
 
 '''
 	Goal: Build database of artists, genres, and related artists. Use networkx to find distances between artists?
